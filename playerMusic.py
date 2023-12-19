@@ -56,21 +56,21 @@ root.after(0, update, 0)
 
 
 
-ButtonPlay = PhotoImage(file="images/play.png")
+ButtonPlay = PhotoImage(file="images/start.png")
 Button(root, image=ButtonPlay, bg="#FFFFFF", bd=0, height = 60, width =60,
-       command=PlayMusic).place(x=215, y=487)
+       command=PlayMusic).place(x=20, y=487)  #x=215, y=487
 
 ButtonStop = PhotoImage(file="images/stop.png")
 Button(root, image=ButtonStop, bg="#FFFFFF", bd=0, height = 60, width =60,
-       command=mixer.music.stop).place(x=130, y=487)
+       command=mixer.music.stop).place(x=300, y=487) #x=130, y=487
 
-Buttonvolume = PhotoImage(file="images/volume.png")
+Buttonvolume = PhotoImage(file="images/play.png")
 Button(root, image=Buttonvolume, bg="#FFFFFF", bd=0, height = 60, width =60,
-       command=mixer.music.unpause).place(x=20, y=487)
+       command=mixer.music.unpause).place(x=130, y=487) #x=20, y=487
 
 ButtonPause = PhotoImage(file="images/pause.png")
 Button(root, image=ButtonPause, bg="#FFFFFF", bd=0, height = 60, width =60,
-       command=mixer.music.pause).place(x=300, y=487)
+       command=mixer.music.pause).place(x=215, y=487) #x=300, y=487
       
 Menu = PhotoImage(file="images/menu.png")
 Label(root, image=Menu).place(x=0, y=580, width=485, height=120)
