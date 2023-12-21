@@ -1,15 +1,16 @@
 import os
 import time
+import pygame
 from tkinter import *
 from tkinter import filedialog
 from pygame import mixer
 
 root = Tk()
 root.title("Music Player")
-root.geometry("485x700+290+10")
+root.geometry("535x700+290+10")
 root.configure(background='#333333')
 root.resizable(False, False)
-mixer.init()
+mixer.init()            
 
 def AddMusic():
     path = filedialog.askdirectory()
@@ -26,10 +27,12 @@ def PlayMusic():
     Music_Name = Playlist.get(ACTIVE)
     print(Music_Name[0:-4])
     mixer.music.load(Playlist.get(ACTIVE))
+    mixer.music.queue(Playlist.get(ACTIVE))
     mixer.music.play()
+    return mixer.music.play()
     
 
-lower_frame = Frame(root , bg = "#FFFFFF", width = 485 , height = 180 )
+lower_frame = Frame(root , bg = "#FFFFFF", width = 535 , height = 180 )
 lower_frame.place ( x = 0 , y = 400)
 
 
@@ -60,27 +63,47 @@ ButtonPlay = PhotoImage(file="images/start.png")
 Button(root, image=ButtonPlay, bg="#FFFFFF", bd=0, height = 60, width =60,
        command=PlayMusic).place(x=20, y=487)  #x=215, y=487
 
-ButtonStop = PhotoImage(file="images/stop.png")
-Button(root, image=ButtonStop, bg="#FFFFFF", bd=0, height = 60, width =60,
-       command=mixer.music.stop).place(x=300, y=487) #x=130, y=487
-
-Buttonvolume = PhotoImage(file="images/play.png")
-Button(root, image=Buttonvolume, bg="#FFFFFF", bd=0, height = 60, width =60,
+ButtonUnpause = PhotoImage(file="images/play.png")
+Button(root, image=ButtonUnpause, bg="#FFFFFF", bd=0, height = 60, width =60,
        command=mixer.music.unpause).place(x=130, y=487) #x=20, y=487
 
 ButtonPause = PhotoImage(file="images/pause.png")
 Button(root, image=ButtonPause, bg="#FFFFFF", bd=0, height = 60, width =60,
        command=mixer.music.pause).place(x=215, y=487) #x=300, y=487
+
+ButtonStop = PhotoImage(file="images/stop.png")
+Button(root, image=ButtonStop, bg="#FFFFFF", bd=0, height = 60, width =60,
+       command=mixer.music.stop).place(x=300, y=487) #x=130, y=487
+
+def increase_volume():
+    current_volume = mixer.music.get_volume()
+    new_volume = min(1.0, current_volume + 0.2)
+    mixer.music.set_volume(new_volume)
+
+def decrease_volume():
+    current_volume = mixer.music.get_volume()
+    new_volume = max(0.0, current_volume - 0.1)
+    mixer.music.set_volume(new_volume)
+
+ButtonVolumeUp = PhotoImage(file="images/volumeUP.png")
+Button(root, image=ButtonVolumeUp, bg="#FFFFFF", bd=0, height = 60, width =60,
+       command=increase_volume).place(x=385, y=487) 
+
+ButtonVolumeDown = PhotoImage(file="images/volumeDOWN.png")
+Button(root, image=ButtonVolumeDown, bg="#FFFFFF", bd=0, height = 60, width =60,
+       command= decrease_volume).place(x=470, y=487) 
+
+
       
 Menu = PhotoImage(file="images/menu.png")
 Label(root, image=Menu).place(x=0, y=580, width=485, height=120)
 
 Frame_Music = Frame(root, bd=2, relief=RIDGE)
-Frame_Music.place(x=0, y=585, width=485, height=100)
+Frame_Music.place(x=0, y=585, width=535, height=100)
 
 
 
-Button(root, text="Browse Music", width=59, height=1, font=("calibri",
+Button(root, text="Browse Music", width=68, height=1, font=("calibri",
       12, "bold"), fg="Black", bg="#FFFFFF", command=AddMusic).place(x=0, y=550)
 
 Scroll = Scrollbar(Frame_Music)
